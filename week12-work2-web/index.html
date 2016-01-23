@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>高级前端工程师面试题</title>
+    <style type="text/css">
+    .answer {
+        background: #e4e4e4;
+        line-height: 20px;
+        padding: 1px 16px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="con">
+        <h1>高级前端工程师面试题</h1>
+        <h2>html部分</h2>
+        <h3>Doctype作用? 严格模式与混杂模式如何区分？它们有何意义?</h3>
+        <div class="answer">
+            <p>1.&lt!DOCTYPE&gt 声明位于文档中的最前面，处于 &lthtml&gt 标签之前。告知浏览器的解析器，用什么文档类型 规范来解析这个文档。</p>
+            <p>2.严格模式的排版和 JS 运作模式是以该浏览器支持的最高标准运行。</p>
+            <p>3.在混杂模式中，页面以宽松的向后兼容的方式显示。模拟老式浏览器的行为以防止站点无法工作。</p>
+            <p>4.DOCTYPE不存在或格式不正确会导致文档以混杂模式呈现。</p>
+        </div>
+        <h3>行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？</h3>
+        <div class="answer">
+            <p>1.CSS规范规定，每个元素都有display属性，确定该元素的类型，每个元素都有默认的display值， 比如div默认display属性值为“block”，成为“块级”元素； span默认display属性值为“inline”，是“行内”元素。</p>
+            <p>2.行内元素有：a b span img input select strong em i</p>
+            <p>3.块级元素有：div ul ol li dl dt dd h1—h6 p form</p>
+            <p>4.空元素及内容为空的元素标签于开始就结束的元素</p>
+            <p>常见的空元素有：&ltbr&gt &lthr&gt &ltimg&gt &ltinput&gt &ltlink&gt &ltmeta&gt </p>
+            <p>罕见的空元素有：&ltarea&gt &ltbase&gt &ltcol&gt &ltcommand&gt &ltembed&gt &ltkeygen&gt &ltparam&gt &ltsource&gt &lttrack&gt &ltwbr&gt</p>
+        </div>
+        <h3>link 和@import 的区别是？</h3>
+        <div class="answer">
+            <p>1.link属于XHTML标签，而@import是CSS提供的;</p>
+            <p>2.页面被加载的时，link会同时被加载，而@import引用的CSS会等到页面被加载完再加载;</p>
+            <p>3.import只在IE5以上才能识别，而link是XHTML标签，无兼容问题;</p>
+            <p>4.link方式的样式的权重 高于@import的权重. </p>
+        </div>
+        <h3>浏览器的内核分别是什么?</h3>
+        <div class="answer">
+            <p>IE浏览器的内核Trident、Mozilla的Gecko、Chrome的Blink（WebKit的分支）、Opera内核原为Presto，现为Blink；</p>
+        </div>
+        <h3>常见兼容性问题？</h3>
+        <div class="answer">
+            <p>1.png24位的图片在iE6浏览器上出现背景，解决方案是做成PNG8.</p>
+            <p>2.浏览器默认的margin和padding不同。解决方案是通过{margin:0;padding:0;}重置css来统一。</p>
+            <p>3.IE6双边距bug:块属性标签float后，又有横行的margin情况下，在ie6显示margin比设置的大。 </p>
+            <p>浮动ie产生的双倍距离 #box{ float:left; width:10px; margin:0 0 0 100px;} </p>
+            <p>这种情况之下IE会产生20px的距离，解决方案是在float的标签样式控制中加入 _display:inline;将其转化为行内属性。(_这个符号只有ie6会识别)</p>
+            <p>渐进识别的方式，从总体中逐渐排除局部。(主要针对ie) </p>
+            <p>首先，巧妙的使用“\9”这一标记，将IE游览器从所有情况中分离出来。</p>
+            <p>接着，再次使用“+”将IE8和IE7、IE6分离开来，这样IE8已经独立识别。</p>
+            <pre>css 
+            .bb{ 
+                 background-color:#f1ee18;/*所有识别*/
+                .background-color:#00deff\9; /*IE6、7、8识别*/ 
+                +background-color:#a200ff;/*IE6、7识别*/ 
+                _background-color:#1e0bd1;/*IE6识别*/ 
+                }
+        </pre>
+            <p>4.IE下,可以使用获取常规属性的方法来获取自定义属性,也可以使用getAttribute()获取自定义属性;</p>
+            <p> Firefox下,只能使用getAttribute()获取自定义属性.</p>
+            <p> 解决办法，统一使用getAttribute()获取自定义属性.</p>
+            <p>5.IE下,event对象有x,y属性,但是没有pageX,pageY属性;</p>
+            <p>Firefox下,event对象有pageX,pageY属性,但是没有x,y属性.</p>
+            <p>解决方法：（条件注释）缺点是在IE浏览器下可能会增加额外的HTTP请求数.</p>
+            <p>5.Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示, 可通过加入 CSS 属性 -webkit-text-size-adjust: none; 解决.</p>
+            <p>6.超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了解决方法是改变CSS属性的排列顺序:</p>
+            <p>L-V-H-A : a:link {} a:visited {} a:hover {} a:active {}</p>
+        </div>
+        <h3>html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</h3>
+        <div class="answer">
+            <p>1.HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加</p>
+            <p>绘画 canvas</p>
+            <p>用于媒介回放的 video 和 audio 元素</p>
+            <p>本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失</p>
+            <p>sessionStorage 的数据在浏览器关闭后自动删除</p>
+            <p>语意化更好的内容元素，比如 article、footer、header、nav、section </p>
+            <p>表单控件，calendar、date、time、email、url、search </p>
+            <p>新的技术，webworker, websockt, Geolocation </p>
+            <p>移除的元素</p>
+            <p>纯表现的元素：basefont，big，center，font, s，strike，tt，u；</p>
+            <p>对可用性产生负面影响的元素：frame，frameset，noframes；</p>
+            <p>对可用性产生负面影响的元素：frame，frameset，noframes；</p>
+            <p>支持HTML5新标签：</p>
+            <p>IE8/IE7/IE6支持通过document.createElement方法产生的标签，可以利用这一特性让这些浏览器支持HTML5新标签，</p>
+            <p>浏览器支持新标签后，还需要添加标签默认的样式：display:block;</p>
+            <p>也可以用html5.js，不过网上已经不好找,可以直接在页面中引入如下代码：</p>
+            <pre>
+        	&lt!--[if lt IE 9]&gt
+        	&ltscript type="text/javascript"&gt
+                (function() {
+                  if (!
+                  /*@cc_on!@*/
+                        0) return;
+                 var e = "abbr, article, aside, audio, canvas, datalist, details, dialog, eventsource, figure, footer, header, hgroup, mark, menu, meter, nav, output, progress, section, time, video".split(',');
+                 var i = e.length;
+                 while (i--) {
+                 document.createElement(e[i]);
+                  }
+                 }  )();
+        	&lt/script&gt
+        	&lt![endif]--&gt 
+        </pre>
+            <p>html5与html的区别</p>
+            <p>DOCTYPE声明\新增的结构元素\功能元素</p>
+        </div>
+        <h3>语义化的理解？</h3>
+        <div class="answer">
+            <p>用正确的标签做正确的事情！</p>
+            <p>html语义化就是让页面的内容结构化，便于对浏览器、搜索引擎解析；</p>
+            <p>在没有样式CCS情况下也以一种文档格式显示，并且是容易阅读的。</p>
+            <p>搜索引擎的爬虫依赖于标记来确定上下文和各个关键字的权重，利于 SEO。</p>
+            <p>使阅读源代码的人对网站更容易将网站分块，便于阅读维护理解。</p>
+        </div>
+        <h3>HTML5的离线储存？</h3>
+        <div class="answer">
+            <p>localStorage 长期存储数据，浏览器关闭后数据不丢失；</p>
+            <p>sessionStorage 数据在浏览器关闭后自动删除</p>
+        </div>
+        <h3>(写)描述一段语义的html代码吧。</h3>
+        <div class="answer">
+            <p>（HTML5中新增加的很多标签（如：&ltarticle&gt、&ltnav&gt、&ltheader&gt和&ltfooter&gt等）</p>
+            <p>就是基于语义化的原则</p>
+            <pre>
+        		 &ltheader&gt
+        		 	&lth1>标题1&lt/h1&gt
+        		 	&lth2>web前端技术&lt/h2&gt
+        		 &lt/header&gt
+        	</pre>
+        </div>
+        <h3>iframe有那些缺点？</h3>
+        <div class="answer">
+            <p>1.iframe会阻塞主页面的Onload事件</p>
+            <p>2.iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载。</p>
+            <p>使用iframe之前需要考虑这两个缺点。如果需要使用iframe，最好是通过javascript动态给iframe添加src属性值，这样可以可以绕开以上两个问题。</p>
+        </div>
+        <h3>请描述一下 cookies，sessionStorage 和 localStorage 的区别？</h3>
+        <div class="answer">
+            <p>cookie在浏览器和服务器间来回传递。 sessionStorage和localStorage不会,sessionStorage和localStorage的存储空间更大</p>
+            <p>sessionStorage和localStorage有更多丰富易用的接口</p>
+            <p>sessionStorage和localStorage各自独立的存储空间</p>
+            <p>localStorage 长期存储数据，浏览器关闭后数据不丢失；</p>
+            <p>sessionStorage 数据在浏览器关闭后自动删除</p>
+        </div>
+        <h3>如何实现浏览器内多个标签页之间的通信? </h3>
+        <div class="answer">
+            <p>调用localstorge、cookies等本地存储方式</p>
+        </div>
+        <h3>webSocket如何兼容低浏览器？</h3>
+        <div class="answer">
+            <p>Adobe Flash Socket 、 ActiveX HTMLFile (IE) 、 基于 multipart 编码发送 XHR 、 基于长轮询的 XHR</p>
+        </div>
+        <h2>CSS部分</h2>
+        <h3>介绍一下CSS的盒子模型？</h3>
+        <div class="answer">
+            <p>有两种，普通盒模型，怪异盒模型（ie）主要区别是怪异盒模型的大小包含内边距和边框</p>
+            <p>盒模型包含内容（content），内边距（padding），边框（border），外边距（margin）</p>
+        </div>
+        <h3>CSS 选择符有哪些？哪些属性可以继承？优先级算法如何计算？ CSS3新增伪类有那些？</h3>
+        <div class="answer">
+            <p>1.id选择器（#myid）</p>
+            <p>2.类选择器（.myclassname）</p>
+            <p>3.标签选择器（div p span）</p>
+            <p>4.相邻选择器（h1+p）</p>
+            <p>5.子代选择器（div>p）</p>
+            <p>6.后代选择器（div p）</p>
+            <p>7.通配符选择器（*）</p>
+            <p>8.属性选择器（a[rel = "external"]）</p>
+            <p>9.伪类选择器（a: hover, li: nth - child）</p>
+            <p>可继承的样式：font-size font-family color，ul ol li dl dt dd</p>
+            <p>不可继承的样式：border padding margin width height等</p>
+            <p>优先级就近原则，同权重情况下样式定义最近者为准,载入样式以最后载入的定位为准</p>
+            <p>优先级:!important > 内联 > id > class > tag</p>
+            <p>CSS3新增伪类举例：</p>
+            <p>p:first-of-type 选择属于其父元素的首个 p 元素。</p>
+            <p>p:last-of-type 选择属于其父元素的最后一个 p 元素。</p>
+            <p>p:only-of-type 选择属于其父元素唯一的 p 元素</p>
+            <p>p:only-child 选择属于其父元素的唯一子元素的每个 p 元素。</p>
+            <p>p:nth-child(2) 选择属于其父元素的第二个子元素的每个 p 元素。</p>
+            <p>:enabled :disabled 控制表单控件的禁用状态。</p>
+            <p>:checked 单选框或复选框被选中。</p>
+        </div>
+        <h3>如何居中div？如何居中一个浮动元素？</h3>
+        <div class="answer">
+            <p>1.给div设定宽度，而后设定margin: 0 auto</p>
+            <p>2.居中浮动元素，先设置为相对定位，而后通过left，top以及margin属性设置居中</p>
+            <pre>
+        		假设浮动div的宽300px，高500px，居中代码如下：
+        		div{ 
+        		     position:relative;//或者absolute
+        		     left:50%;
+        		     top:50%;
+        		     width:300px;
+        		     height:500px;
+        		     margin:-150px 0 0 -250px;
+        		     background:#333//方便查看效果
+        		}
+        	</pre>
+        </div>
+        <h3>列出display的值，说明他们的作用。position的值， relative和absolute定位原点是？</h3>
+        <div class="answer">
+            <h4>1.display的值</h4>
+            <p>block 像块级元素一样显示。</p>
+            <p>none 不显示。</p>
+            <p>inline 像行内元素样显示。</p>
+            <p>inline-block 像行内元素一样显示，但其内容像块级元素一样显示。</p>
+            <p>list-item 像块类型元素一样显示，并添加样式列表标记。</p>
+            <h4>2.position的值</h4>
+            <p>relative 生成相对定位的元素，相对于其正常位置进行定位</p>
+            <p>absolute 生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位</p>
+            <p>fixed(老ie不支持) 生成固定定位的元素，相对于浏览器进行定位</p>
+            <p>static 默认值。没有定位，元素出现在正常的流中</p>
+            <p>inherit 规定从父元素继承 position 属性的值</p>
+        </div>
+        <h3>CSS3有哪些新特性？</h3>
+        <div class="answer">
+            <p>CSS3实现圆角（border-radius:8px）</p>
+            <p>阴影（box-shadow:10px）</p>
+            <p>对文字加特效（text-shadow）</p>
+            <p>线性渐变（gradient）</p>
+            <p>旋转（transform） transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//旋转,缩放,定位,倾斜</p>
+            <p>增加了更多的CSS选择器 多背景 rgba</p>
+        </div>
+        <h3>一个满屏 品 字布局 如何设计?</h3>
+        <div class="answer">
+            <p>html部分</p>
+            <pre>
+             &ltdiv class="header"&gt&lt/div&gt
+             &ltdiv class="content"&gt
+                 &ltdiv class="left"&gt&lt/div&gt
+                 &ltdiv class="right"&gt&lt/div&gt
+             &lt/div&gt
+        	</pre>
+            <p>css部分</p>
+            <pre>
+            	 * {
+                     margin: 0;
+                     padding: 0;
+                    }
+    
+               html,
+               body {
+                   height: 100%;
+               }
+               
+               .header {
+                   background: #38f;
+                   width: 100%;
+                   height: 40%;
+               }
+               
+               .content {
+                   width: 100%;
+                   height: 60%;
+               }
+               
+               .left,
+               .right {
+                   float: left;
+                   width: 50%;
+                   height: 100%;
+               }
+               
+               .left {
+                   background: #333;
+               }
+               
+               .right {
+                   background: #83f;
+               }
+            </pre>
+        </div>
+        <h3>为什么要初始化CSS样式</h3>
+        <div class="answer">
+            <p>因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。</p>
+            <p>当然，初始化样式会对SEO有一定的影响，但鱼和熊掌不可兼得，但力求影响最小的情况下初始化。</p>
+            <p>最简单的初始化方法就是： * {padding: 0; margin: 0;} （不建议,杀伤力太强）</p>
+            <p>一般是需要用到什么就重置什么</p>
+            <p>淘宝的样式初始化：</p>
+            <pre>
+        	   body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+        	   body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+        	   address, cite, dfn, em, var { font-style:normal; }
+        	   code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+        	   small{ font-size:12px; }
+        	   ul, ol { list-style:none; }
+        	   a { text-decoration:none; }
+        	   a:hover { text-decoration:underline; }
+        	   sup { vertical-align:text-top; }
+        	   sub{ vertical-align:text-bottom; }
+        	   legend { color:#000; }
+        	   fieldset, img { border:0; }
+        	   button, input, select, textarea { font-size:100%; }
+        	   table { border-collapse:collapse; border-spacing:0; }
+        	</pre>
+        </div>
+        <h3>absolute的containing block计算方式跟正常流有什么不同？</h3>
+        <div class="answer">
+            <p>containing block:</p>
+            <p>一般来说，盒子本身就为其子孙建立了 containing block，用来计算内部盒子的位置、大小，而对内部的盒子，具体采用哪个 containing block 来计算，需要分情况来讨论：</p>
+            <p>1.根元素所在的 containing block 被称为 initial containing block，在我们常用的浏览器环境下，指的是原点与 canvas 重合，大小和 viewport 相同的矩形；</p>
+            <p>2.对于 position 为 static 或 relative 的元素，其 containing block 为祖先元素中最近的 block container box 的 content box (除 margin, border, padding 外的区域)；</p>
+            <p>3.对于 position:fixed 的元素，其 containing block 由 viewport 建立；</p>
+            <p>4.对于 position:absolute 的元素，则是先找到其祖先元素中最近的 position 属性非 static 的元素，然后判断：</p>
+            <p>若此元素为 inline 元素，则 containing block 为能够包含这个元素生成的第一个和最后一个 inline box 的 padding box (除 margin, border 外的区域) 的最小矩形；否则则由这个祖先元素的 padding box 构成</p>
+            <p>如果都找不到，则为 initial containing block</p>
+        </div>
+        <h3>position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？</h3>
+        <div class="answer">
+            <h4>display、position 和 float 的相互关系</h4>
+            <p>1.display的值为none，浮动定位都无效</p>
+            <p>2.position的值为absolute或fixed，浮动无效，display按设置</p>
+            <p>3.如果float不是none，display按float规则，例如：span本是行内元素，设定了float：left，就变成了块级元素</p>
+            <p>4.元素是根元素display的值按照转换对应表设置,否则，应用指定的 display 特性值</p>
+            <h4>position跟display、overflow、float下的margin collapse</h4>
+            <p>1.两个或多个毗邻的普通流中的块元素垂直方向上的 margin 会折叠</p>
+            <p>2.浮动元素、inline-block 元素、绝对定位元素的 margin 不会和垂直方向上其他元素的 margin 折叠</p>
+            <p>3.创建了块级格式化上下文的元素（overflow：hidden），不和它的子元素发生 margin 折叠</p>
+            <p>4.元素自身的 margin-bottom 和 margin-top 相邻时也会折叠</p>
+        </div>
+        <h3>对BFC规范的理解？</h3>
+        <div class="answer">
+            <p>W3C CSS 2.1 规范中的一个概念,它决定了元素如何对其内容进行定位,以及与其他元素的关 系和相互作用。</p>
+        </div>
+        <h3>css定义的权重</h3>
+        <div class="answer">
+            <p>以下是权重的规则：标签的权重为1，class的权重为10，id的权重为100，</p>
+            <p>以下例子是演示各种定义的权重值:</p>
+            <pre>
+        	/*权重为1*/
+        	div{}
+        	/*权重为10*/
+        	.class1{}
+        	/*权重为100*/
+        	#id1{}
+        	/*权重为100+1=101*/
+        	#id1 div{}
+        	/*权重为10+1=11*/
+        	.class1 div{}
+        	/*权重为10+10+1=21*/
+        	.class1 .class2 div{} 
+            如果权重相同，则最后定义的样式会起作用，但是应该避免这种情况出现
+        	</pre>
+        </div>
+        <h3>解释下浮动和它的工作原理？清除浮动的技巧</h3>
+        <div class="answer">
+            <p>Float也是是一种布局方式，它定义元素在哪个方向浮动。以往这个属性总应用于图像，使文本围绕在图像周围，不过在 CSS 中，任何元素都可以浮动。浮动元素会生成一个块级框，而不论它本身是何种元素。 在布局过程中也经常会使用它来达到左右并排布局的效果。</p>
+            <p>清除浮动的技巧：</p>
+            <p>1.利用空元素增加clear：both属性</p>
+            <p>2.利用overflow：auto，在需要清楚浮动的地方增加overflow属性即可</p>
+            <p>3.利用伪类after</p>
+            <p>4.float in float</p>
+        </div>
+        <h3>使用 CSS 预处理器吗？喜欢那个？</h3>
+        <div class="answer">
+            <p>less,sass</p>
+            <p>less上手简单，sass略专业</p>
+        </div>
+        <h3>如果需要手动写动画，你认为最小时间间隔是多久，为什么？</h3>
+        <div class="answer">
+            <p>多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms</p>
+        </div>
+        <h3>display:inline-block 什么时候会显示间隙？</h3>
+        <div class="answer">
+            <p>移除空格、使用margin负值、使用font-size:0、letter-spacing、word-spacing</p>
+        </div>
+        <h2>JavaScript部分</h2>
+        <h3>JavaScript原型，原型链 ? 有什么特点？</h3>
+        <div class="answer">
+            <h4>什么是原型：</h4>
+            <p>每一个对象都有原型，使用 __proto__ 标记，原型是一个对象的引用或 null（ Object.prototype 的原型为 null ），允许对象使用其原型所引用的对象中的变量。</p>
+            <p>对象的原型来自其构造函数的原型属性（用 prototype 标记）的引用。注意原型与原型属性是两个概念。</p>
+            <h4>通过自己的原型并向上寻找直到Object.prototype.__proto__; 这条链就是原型链。 </h4>
+            <p>protoype和proto统称为原型对象，但前者是在类中，后者是在对象中的表示，实例对象中没有prototype属性的。js中的类是通过function来模拟的，每一个function都有一个prototype属性</p>
+        </div>
+        <h3>eval是做什么的？</h3>
+        <div class="answer">
+        	<p>它的功能是把对应的字符串解析成JS代码并运行；</p>
+        	<p>应该避免使用eval，不安全，非常耗性能（2次，一次解析成js语句，一次执行）</p>
+        </div>
+        <h3>null，undefined 的区别？</h3>
+        <div class="answer">
+        	<h4>null表示"没有对象"，即该处不应该有值,典型用法是：</h4>
+        	<p>1.作为函数的参数，表示该函数的参数不是对象</p>
+        	<p>2.作为对象原型链的终点</p>
+        	<p>Object.getPrototypeOf(Object.prototype)//null</p>
+        	<h4>undefined表示"缺少值"，就是此处应该有一个值，但是还没有定义。典型用法是：</h4>
+        	<p>1.变量被声明了，但没有赋值时，就等于undefined</p>
+        	<p>2.调用函数时，应该提供的参数没有提供，该参数等于undefined</p>
+        	<p>3.对象没有赋值的属性，该属性的值为undefined</p>
+        	<p>4.函数没有返回值时，默认返回undefined</p>
+        	<pre>
+        		var i;
+        		i //undefined
+
+        		function f(x){console.log(x)}
+        		f(); //undefined
+
+        		var  o = new Object();
+        		o.p // undefined
+
+        		var x = f();
+        		x // undefined
+        	</pre>
+        </div>
+        <h3>写一个通用的事件侦听器函数</h3>
+        <div class="answer">
+        	<pre>
+        		// event(事件)工具集，来源：github.com/markyun
+                       markyun.Event = {
+                                            // 页面加载完成后
+                                            readyEvent : function(fn) {
+                                                if (fn==null) {
+                                                    fn = document;
+                                                }
+                                                var oldonload = window.onload;
+                                                if (typeof window.onload != 'function') {
+                                                    window.onload = fn;
+                                                } else {
+                                                    window.onload = function() {
+                                                        oldonload();
+                                                        fn();
+                                                    };
+                                                }
+                                            },
+                                            // 视能力分别使用dom0||dom2||IE方式 来绑定事件
+                                            // 参数： 操作的元素,事件名称 ,事件处理程序
+                                            addEvent : function(element, type, handler) {
+                                                if (element.addEventListener) {
+                                                    //事件类型、需要执行的函数、是否捕捉
+                                                    element.addEventListener(type, handler, false);
+                                                } else if (element.attachEvent) {
+                                                    element.attachEvent('on' + type, function() {
+                                                        handler.call(element);
+                                                    });
+                                                } else {
+                                                    element['on' + type] = handler;
+                                                }
+                                            },
+                                            // 移除事件
+                                            removeEvent : function(element, type, handler) {
+                                                if (element.removeEnentListener) {
+                                                    element.removeEnentListener(type, handler, false);
+                                                } else if (element.datachEvent) {
+                                                    element.detachEvent('on' + type, handler);
+                                                } else {
+                                                    element['on' + type] = null;
+                                                }
+                                            }, 
+                                            // 阻止事件 (主要是事件冒泡，因为IE不支持事件捕获)
+                                            stopPropagation : function(ev) {
+                                                if (ev.stopPropagation) {
+                                                    ev.stopPropagation();
+                                                } else {
+                                                    ev.cancelBubble = true;
+                                                }
+                                            },
+                                            // 取消事件的默认行为
+                                            preventDefault : function(event) {
+                                                if (event.preventDefault) {
+                                                    event.preventDefault();
+                                                } else {
+                                                    event.returnValue = false;
+                                                }
+                                            },
+                                            // 获取事件目标
+                                            getTarget : function(event) {
+                                                return event.target || event.srcElement;
+                                            },
+                                            // 获取event对象的引用，取到事件的所有信息，确保随时能使用event；
+                                            getEvent : function(e) {
+                                                var ev = e || window.event;
+                                                if (!ev) {
+                                                    var c = this.getEvent.caller;
+                                                    while (c) {
+                                                        ev = c.arguments[0];
+                                                        if (ev && Event == ev.constructor) {
+                                                            break;
+                                                        }
+                                                        c = c.caller;
+                                                    }
+                                                }
+                                                return ev;
+                                            }
+                                        }; 
+        	</pre>                 
+        </div>
+        <h3>Node.js的适用场景？</h3>
+        <div class="answer">
+        	<p>高并发、聊天、实时消息推送</p>
+        </div>
+        <h3>介绍js的基本数据类型</h3>
+        <div class="answer">
+        	<p>number,string,boolean,object,undefined</p>
+        </div>
+        <h3>Javascript如何实现继承？</h3>
+        <div class="answer">
+        	<p>通过原型和构造器</p>
+        </div>
+        <h3>["1", "2", "3"].map(parseInt) 答案是多少？</h3>
+        <div class="answer">
+        	<p>[1, NaN, NaN] 因为 parseInt 需要两个参数 (val, radix) 但 map 传了 3 个 (element, index, array),对应的 radix 不合法导致解析失败。</p>
+        </div>
+        <h3>如何创建一个对象? （画出此对象的内存图）</h3>
+        <div class="answer">
+        	<pre>
+        		 function Person(name, age) {
+                                           this.name = name;
+                                           this.age = age;
+                                           this.sing = function() { alert(this.name) } 
+                                         } 
+        	</pre>
+        </div>
+        <h3>谈谈This对象的理解</h3>
+        <div class="answer">
+        	<p>this是js的一个关键字，随着函数使用场合不同，this的值会发生变化。</p>
+        	<p>但是有一个总原则，那就是this指的是调用函数的那个对象。</p>
+        	<p>this一般情况下：是全局对象Global。 作为方法调用，那么this就是指这个对象 。</p>
+        </div>
+        <h3>事件是？IE与火狐的事件机制有什么区别？ 如何阻止冒泡？</h3>
+        <div class="answer">
+        	<p>1.我们在网页中的某个操作（有的操作对应多个事件）。例如：当我们点击一个按钮就会产生一个事件。是可以被 JavaScript 侦测到的行为。</p>
+        	<p>2.事件处理机制：IE是事件冒泡、火狐是 事件捕获。</p>
+        	<p>3.ev.stopPropagation()。</p>
+        </div>
+        <h3>什么是闭包（closure），为什么要用它？</h3>
+        <div class="answer">
+        	<p>闭包是指有权访问另一个函数作用域中变量的函数，创建闭包的最常见的方式就是在一个函数内创建另一个函数，通过另一个函数访问这个函数的局部变量</p>
+        	<h4>闭包的特性：</h4>
+        	<p>1.函数内再嵌套函数</p>
+        	<p>2.内部函数可以引用外层的参数和变量</p>
+        	<p>3.参数和变量不会被垃圾回收机制回收</p>
+        	<pre>
+                执行say667()后,say667()闭包内部变量会存在,而闭包内部函数的内部变量不会存在.使得Javascript的垃圾回收机制GC不会收回say667()所占用的资源，因为say667()的内部函数的执行需要依赖say667()中的变量。这是对闭包作用的非常直白的描述.
+                function say667() {
+                  var num = 666;
+                  var sayAlert = function() { alert(num); }
+                  num++;
+                  return sayAlert;
+                 }
+                var sayAlert = say667();
+                sayAlert()//执行结果应该弹出的667 
+        	</pre>
+        </div>
+        <h3>"use strict";是什么意思 ? 使用它的好处和坏处分别是什么？</h3>
+        <div class="answer">
+        	<p>use strict是一种ECMAscript 5 添加的（严格）运行模式,这种模式使得 Javascript 在更严格的条件下运行,使JS编码更加规范化的模式,消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为。</p>
+        	<p>默认支持的糟糕特性都会被禁用，比如不能用with，也不能在意外的情况下给全局变量赋值;</p>
+        	<p>全局变量的显示声明,函数必须声明在顶层，不允许在非函数代码块内声明函数,arguments.callee也不允许使用;</p>
+        	<p>消除代码运行的一些不安全之处，保证代码运行的安全,限制函数中的arguments修改，严格模式下的eval函数的行为和非严格模式的也不相同;</p>
+        	<p>消除代码运行的一些不安全之处，保证代码运行的安全,限制函数中的arguments修改，严格模式下的eval函数的行为和非严格模式的也不相同;</p>
+        	<p>提高编译器效率，增加运行速度；为未来新版本的Javascript标准化做铺垫</p>
+        </div>
+        <h3>如何判断一个对象是否属于某个类？</h3>
+        <div class="answer">
+        	<p>使用instanceof </p>
+        	<pre>
+        	if(a instanceof Person){
+        	       alert('yes');
+        	       }
+        	</pre>
+        </div>
+        <h3>new操作符具体干了什么呢?</h3>
+        <div class="answer">
+        	<p>1.创建一个空对象，并且 this 变量引用该对象，同时还继承了该函数的原型。</p>
+        	<p>2.属性和方法被加入到 this 引用的对象中。</p>
+        	<p>3.新创建的对象由 this 所引用，并且最后隐式的返回 this 。</p>
+        	<pre>
+        		var obj  = {};
+        		obj.__proto__ = Base.prototype;
+        		Base.call(obj);
+        	</pre>
+        </div>
+        <h3>Javascript中，有一个函数，执行时对象查找时，永远不会去查找原型，这个函数是？</h3>
+        <div class="answer">
+            <h4>hasOwnProperty</h4>
+        	<p>javaScript中hasOwnProperty函数方法是返回一个布尔值，指出一个对象是否具有指定名称的属性。此方法无法检查该对象的原型链中是否具有该属性；该属性必须是对象本身的一个成员。</p>
+        	<p>使用方法：</p>
+        	<p>object.hasOwnProperty(proName)</p>
+        	<p>其中参数object是必选项。一个对象的实例。</p>
+        	<p>proName是必选项。一个属性名称的字符串值。</p>
+        	<p>如果 object 具有指定名称的属性，那么JavaScript中hasOwnProperty函数方法返回 true，反之则返回 false。</p>
+        </div>
+        <h3>JSON 的了解？</h3>
+        <div class="answer">
+        	<p>JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。</p>
+        	<p>它是基于JavaScript的一个子集。数据格式简单, 易于读写, 占用带宽小</p>
+        	<p>如：{"age":"12", "name":"back"}</p>
+        </div>
+        <h3>Js延迟加载的方式有哪些？</h3>
+        <div class="answer">
+        	<p>defer和async、动态创建DOM方式（用得最多）、按需异步载入js</p>
+        </div>
+        <h3>Ajax 是什么? 如何创建一个Ajax？</h3>
+        <div class="answer">
+        	<p>ajax的全称：Asynchronous Javascript And XML。</p>
+        	<p>异步传输+js+XML</p>
+        	<p>所谓异步，在这里简单地解释就是：向服务器发送请求的时候，我们不必等待结果，而是可以同时做其他的事情，等到有了结果它自己会根据设定进行后续操作，与此同时，页面是不会发生整页刷新的，提高了用户体验。</p>
+        	<p>1.创建XMLHttpRequest对象,也就是创建一个异步调用对象</p>
+        	<p>2.创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息</p>
+        	<p>3.设置响应HTTP请求状态变化的函数</p>
+        	<p>4.发送HTTP请求</p>
+        	<p>5.获取异步调用返回的数据</p>
+        	<p>6.使用JavaScript和DOM实现局部刷新</p>
+        </div>
+        <h3>同步和异步的区别?</h3>
+        <div class="answer">
+        	<p>同步：浏览器访问服务器请求，用户看得到页面刷新，重新发请求,等请求完，页面刷新，新内容出现，用户看到新内容,j进行下一步操作。</p>
+        	<p>异步：浏览器访问服务器请求，用户正常操作，浏览器后端进行请求。等请求完，页面不刷新，新内容也会出现，用户看到新内容。</p>
+        </div>
+        <h3>如何解决跨域问题?</h3>
+        <div class="answer">
+        	<p>jsonp、 iframe、window.name、window.postMessage、服务器上设置代理页面</p>
+        </div>
+        <h3>页面编码和被请求的资源编码如果不一致如何处理？</h3>
+        <div class="answer">
+            <p>修改头文件或meta使之一致</p>
+        </div>
+        <h3>模块化开发怎么做？</h3>
+        <div class="answer">
+        	<p>立即执行函数，不暴露私有成员</p>
+            <pre>
+            var module1 = (function(){
+                    var _count = 0;
+                    var m1 = function(){
+    　　　　　　               //...
+    　　　　        };
+                    var m2 = function(){
+    　　　　　　              //...
+                    };
+                    return {
+                    m1 : m1,
+                    m2 : m2
+                    };
+                  })();
+            </pre>
+        </div>
+        <h3>AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？</h3>
+        <div class="answer">
+        	<p>区别：</p>
+        	<p>1.对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。CMD 推崇 as lazy as possible.</p>
+        	<p>2.CMD 推崇依赖就近，AMD 推崇依赖前置。看代码：</p>
+        	<pre>
+        	    // CMD
+                define(function(require, exports, module) {
+                    var a = require('./a')
+                    a.doSomething()
+                    // 此处略去 100 行
+                    var b = require('./b') // 依赖可以就近书写
+                    b.doSomething()
+                    // ...
+                })
+                // AMD 默认推荐
+               define(['./a', './b'], function(a, b) { // 依赖必须一开始就写好
+                   a.doSomething()
+                   // 此处略去 100 行
+                   b.doSomething()
+                   // ...
+               })
+        	</pre>
+        </div>
+        <h3>requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何 缓存的？）</h3>
+        <h3>谈一谈你对ECMAScript6的了解？</h3>
+        <h3>ECMAScript6 怎么写class么，为什么会出现class这种东西?</h3>
+        <h3>异步加载JS的方式有哪些？</h3>
+        <div class="answer">
+        	<p>defer，只支持IE</p>
+        	<p>async：</p>
+        	<p>创建script，插入到DOM中，加载完毕后callBack</p>
+        </div>
+        <h3>documen.write和 innerHTML的区别</h3>
+        <div class="answer">
+        	<p>document.write只能重绘整个页面</p>
+        	<p>innerHTML可以重绘页面的一部分</p>
+        </div>
+        <h3>.call() 和 .apply() 的区别？</h3>
+        <div class="answer">
+        	<p>call方法：</p>
+        	<p>语法：call(thisObj, Object)</p>
+        	<p>定义：调用一个对象的一个方法，以另一个对象替换当前对象。</p>
+        	<p>说明：call 方法可以用来代替另一个对象调用一个方法。call 方法可将一个函数的对象上下文从初始的上下文改变为由 thisObj 指定的新对象。</p>
+        	<p>apply方法：</p>
+        	<p>语法：apply(thisObj，[argArray])</p>
+        	<p>定义：应用某一对象的一个方法，用另一个对象替换当前对象。</p>
+        	<p>说明：如果 argArray 不是一个有效的数组或者不是 arguments 对象，那么将导致一个 TypeError。 如果没有提供 argArray 和 thisObj 任何一个参数，那么 Global 对象将被用作 thisObj， 并且无法被传递任何参数。</p>
+        </div>
+        <h3>Jquery与jQuery UI 有啥区别？</h3>
+        <div class="answer">
+        	<p>jQuery是一个js库，主要提供的功能是选择器，属性修改和事件绑定等等。</p>
+        	<p>jQuery UI则是在jQuery的基础上，利用jQuery的扩展性，设计的插件。提供了一些常用的界面元素，诸如对话框、拖动行为、改变大小行为等等</p>
+        </div>
+        <h3>jquery 中如何将数组转化为json字符串，然后再转化回来？</h3>
+        <div class="answer">
+        	<p>jQuery中没有提供这个功能，所以你需要先编写两个jQuery的扩展：</p>
+        	<pre>
+        	$.fn.stringifyArray = function(array) {
+        	  return JSON.stringify(array)
+        	  }
+        	$.fn.parseArray = function(array) {
+        	  return JSON.parse(array)
+        	  } 
+
+           然后调用：
+           $("").stringifyArray(array)
+
+        	</pre>
+        </div>
+        <h3>针对 jQuery 的优化方法？</h3>
+        <div class="answer">
+        	<p>1.基于Class的选择性的性能相对于Id选择器开销很大，因为需遍历所有DOM元素。</p>
+        	<p>2.频繁操作的DOM，先缓存起来再操作。用Jquery的链式调用更好.比如：var str=$("a").attr("href");</p>
+        	<p>3.for (var i = size; i < arr.length; i++) {}</p>
+        	<p>for 循环每一次循环都查找了数组 (arr) 的.length 属性，在开始循环的时候设置一个变量来存储这个数字，可以让循环跑得更快： </p>
+        	<p>for (var i = size, length = arr.length; i < length; i++) {}</p>
+        </div>
+        <h3>JavaScript中的作用域与变量声明提升？</h3>
+        <h3>那些操作会造成内存泄漏？</h3>
+        <div class="answer">
+        	<p>内存泄漏指任何对象在您不再拥有或需要它之后仍然存在。</p>
+        	<p>垃圾回收器定期扫描对象，并计算引用了每个对象的其他对象的数量。如果一个对象的引用数量为 0（没有其他对象引用过该对象），或对该对象的惟一引用是循环的，那么该对象的内存即可回收。</p>
+        	<p>setTimeout 的第一个参数使用字符串而非函数的话，会引发内存泄漏。</p>
+        	<p>闭包、控制台日志、循环（在两个对象彼此引用且彼此保留时，就会产生一个循环）都会造成内存泄露</p>
+        </div>
+        <h3>JQuery一个对象可以同时绑定多个事件，这是如何实现的？</h3>
+        <div class="answer">
+        	<pre>
+        		$(#id).click(func1).mouseover(func2);//连写
+        		$("#id").bind("click mouseover",func);//func为方法的名字
+        	</pre>
+        </div>
+        <h3>如何判断当前脚本运行在浏览器还是node环境中？</h3>
+        <div class="answer">
+        	<p>通过判断Global对象是否为window，如果不为window，当前脚本没有运行在浏览器中</p>
+        </div>
+        <h2>其他部分</h2>
+        <h3>js设计模式</h3>
+        <div class="answer">
+        	<p>单例模式，工厂模式，混合模式……</p>
+        </div>
+        <h3>页面重构怎么操作？</h3>
+        <div class="answer">
+        	<p>网站重构：在不改变外部行为的前提下，简化结构、添加可读性，而在网站前端保持一致的行为。也就是说是在不改变UI的情况下，对网站进行优化，在扩展的同时保持一致的UI。</p>
+        	<p>对于传统的网站来说重构通常是：</p>
+        	<p>表格(table)布局改为DIV+CSS</p>
+        	<p>使网站前端兼容于现代浏览器(针对于不合规范的CSS、如对IE6有效的)</p>
+        	<p>对于移动平台的优化</p>
+        	<p>针对于SEO进行优化</p>
+        	<p>深层次的网站重构应该考虑的方面</p>
+        	<p>减少代码间的耦合</p>
+        	<p>让代码保持弹性</p>
+        	<p>严格按规范编写代码</p>
+        	<p>设计可扩展的API</p>
+        	<p>代替旧有的框架、语言(如VB)</p>
+        	<p>增强用户体验</p>
+        	<p>压缩JS、CSS、image等前端资源(通常是由服务器来解决)</p>
+        	<p>程序的性能优化(如数据读写)</p>
+        	<p>采用CDN来加速资源加载</p>
+        	<p>对于JS DOM的优化</p>
+        	<p>HTTP服务器的文件缓存</p>
+        </div>
+        <h3>99%的网站都需要被重构是那本书上写的？</h3>
+        <div class="answer">
+        	<p>网站重构：应用web标准进行设计（第2版）</p>
+        </div>
+        <h3>什么叫优雅降级和渐进增强？</h3>
+        <div class="answer">
+        	<p>优雅降级：Web站点在所有新式浏览器中都能正常工作，如果用户使用的是老式浏览器，则代码会针对旧版本的IE进行降级处理了,使之在旧式浏览器上以某种形式降级体验却不至于完全不能用。如：border-shadow</p>
+        	<p>渐进增强：从被所有浏览器支持的基本功能开始，逐步地添加那些只有新版本浏览器才支持的功能,向页面增加不影响基础浏览器的额外样式和功能的。当浏览器支持时，它们会自动地呈现出来并发挥作用。如：默认使用flash上传，但如果浏览器支持 HTML5 的文件上传功能，则使用HTML5实现更好的体验；</p>
+        </div>
+        <h3>是否了解公钥加密和私钥加密。</h3>
+        <div class="answer">
+        	<p>一般情况下是指私钥用于对数据进行签名，公钥用于对签名进行验证;</p>
+        	<p>HTTP网站在浏览器端用公钥加密敏感数据，然后在服务器端再用私钥解密。</p>
+        </div>
+        <h3>WEB应用从服务器主动推送Data到客户端有那些方式？</h3>
+        <div class="answer">
+        	<p>html5提供的Websocket</p>
+        	<p>不可见的iframe</p>
+        	<p>WebSocket通过Flash</p>
+        	<p>XHR长时间连接</p>
+        	<p>XHR Multipart Streaming</p>
+        	<p>&ltscript&gt标签的长时间连接(可跨域)</p>
+        </div>
+        <h3>对Node的优点和缺点提出了自己的看法？</h3>
+        <div class="answer">
+        	<p>（优点）因为Node是基于事件驱动和无阻塞的，所以非常适合处理并发请求，因此构建在Node上的代理服务器相比其他技术实现（如Ruby）的服务器表现要好得多。此外，与Node代理服务器交互的客户端代码是由javascript语言编写的，因此客户端和服务器端都用同一种语言编写，这是非常美妙的事情。</p>
+        	<p>（缺点）Node是一个相对新的开源项目，所以不太稳定，它总是一直在变</p>
+        </div>
+        <h3>你有用过哪些前端性能优化的方法？</h3>
+        <div class="answer">
+        	<p>1.减少http请求次数：CSS Sprites, JS、CSS源码压缩、图片大小控制合适；网页Gzip，CDN托管，data缓存 ，图片服务器。</p>
+        	<p>2.前端模板 JS+数据，减少由于HTML标签导致的带宽浪费，前端用变量保存AJAX请求结果，每次操作本地变量，不用请求，减少请求次数</p>
+        	<p>3.用innerHTML代替DOM操作，减少DOM操作次数，优化javascript性能。</p>
+        	<p>4.当需要设置的样式很多时设置className而不是直接操作style。</p>
+        	<p>5.少用全局变量、缓存DOM节点查找的结果。减少IO读取操作。</p>
+        	<p>6.避免使用CSS Expression（css表达式)又称Dynamic properties(动态属性)。</p>
+        	<p>7.图片预加载，将样式表放在顶部，将脚本放在底部  加上时间戳或MD5。</p>
+        	<p>8.避免在页面的主体布局中使用table，table要等其中的内容完全下载之后才会显示出来，显示比div+css布局慢。</p>
+        	<p>对普通的网站有一个统一的思路，就是尽量向前端优化、减少数据库操作、减少磁盘IO。向前端优化指的是，在不影响功能和体验的情况下，能在浏览器执行的不要在服务端执行，能在缓存服务器上直接返回的不要到应用服务器，程序能直接取得的结果不要到外部取得，本机内能取得的数据不要到远程取，内存能取到的不要到磁盘取，缓存中有的不要去数据库查询。减少数据库操作指减少更新次数、缓存结果减少查询次数、将数据库执行的操作尽可能的让你的程序完成（例如join查询），减少磁盘IO指尽量不使用文件系统作为缓存、减少读写文件次数等。程序优化永远要优化慢的部分，换语言是无法“优化”的。</p>
+        </div>
+        <h3>http状态码有那些？分别代表是什么意思？</h3>
+        <div class="answer">
+        	<p>100  Continue   继续，一般在发送post请求时，已发送了http header之后服务端将返回此信息，表示确认，之后发送具体参数信息</p>
+        	<hr/>
+        	<p>200  OK         正常返回信息</p>
+        	<p>201  Created    请求成功并且服务器创建了新的资源</p>
+        	<p>202  Accepted   服务器已接受请求，但尚未处理</p>
+        	<hr/>
+        	<p>301  Moved Permanently  请求的网页已永久移动到新位置。</p>
+        	<p>302  Found       临时性重定向。</p>
+        	<p>303  See Other   临时性重定向，且总是使用 GET 请求新的 URI。</p>
+        	<p>304  Not Modified 自从上次请求后，请求的网页未修改过。</p>
+        	<hr/>
+        	<p>400  Bad Request  服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。</p>
+        	<p>401  Unauthorized 请求未授权。</p>
+        	<p>403  Forbidden   禁止访问。</p>
+        	<p>404 Not Found   找不到如何与 URI 相匹配的资源。</p>
+        	<hr/>
+        	<p>500 Internal Server Error  最常见的服务器端错误。</p>
+        	<p>503 Service Unavailable 服务器端暂时无法处理请求（可能是过载或维护）。</p>
+        </div>
+        <h3>一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？</h3>
+        <div class="answer">
+        	<p>浏览器根据请求的URL交给DNS域名解析，找到真实IP，向服务器发起请求；</p>
+        	<p>服务器交给后台处理完成后返回数据，浏览器接收文件（HTML、JS、CSS、图象等）；</p>
+        	<p>浏览器对加载到的资源（HTML、JS、CSS等）进行语法解析，建立相应的内部数据结构（如HTML的DOM）；</p>
+        	<p>载入解析到的资源文件，渲染页面，完成。</p>
+        </div>
+    </div>
+</body>
+
+</html>
